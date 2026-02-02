@@ -88,7 +88,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./notifiers/${{ matrix.service }}
+          # Use repository root as build context so Dockerfiles can reference top-level paths
+          context: .
           file: ./notifiers/${{ matrix.service }}/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
